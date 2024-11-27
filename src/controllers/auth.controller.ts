@@ -8,7 +8,12 @@ export const register = async (req: Request, res: Response): Promise<any> => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = await User.create({ name, email, password: hashedPassword });
-  return res.status(201).json(user);
+  return res.status(201).json({
+    success: true,
+    message: "success",
+    code: 200,
+    data: user
+  });
 };
 
 export const login = async (req: Request, res: Response): Promise<any> => {
@@ -23,7 +28,9 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 
   const token = generateToken({ id: user.id, email: user.email });
   return res.json({
-    message: 'success',
+    success: true,
+    message: "success",
+    code: 200,
     data: {
         token: token,
     }

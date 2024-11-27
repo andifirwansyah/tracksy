@@ -1,8 +1,12 @@
 import { Sequelize } from "sequelize-typescript";
 import { config } from "dotenv";
-import User from "../models/user.model";
-import Project from "../models/project.model";
-import Client from "../models/client.model";
+import { readdirSync } from "fs";
+import { resolve } from "path";
+
+const modelsPath = resolve(__dirname, "../models");
+const modelFiles = readdirSync(modelsPath).filter((file) =>
+  file.endsWith(".model.ts") || file.endsWith(".model.js")
+);
 
 config();
 
@@ -12,7 +16,10 @@ const sequelize = new Sequelize({
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  models: [User, Project, Client],
 });
+
+const models = modelFiles.map((file) => require(resolve(modelsPath, file)).default);
+
+sequelize.addModels(models);
 
 export default sequelize;

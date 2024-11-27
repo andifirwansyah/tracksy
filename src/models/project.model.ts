@@ -1,5 +1,6 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany } from "sequelize-typescript";
 import Client from "./client.model";
+// import Team from './team.model';
 
 @Table({
   tableName: "projects",
@@ -58,6 +59,9 @@ class Project extends Model {
 
   @BelongsTo(() => Client)
   client!: Client;
+
+  // @BelongsTo(() => Team)
+  // team!: Team;
 }
 
 export default Project;

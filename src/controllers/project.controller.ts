@@ -7,13 +7,14 @@ export const getProjects = async (req: Request, res: Response): Promise<any> => 
     const projects = await Project.findAll({
       include: [
         {
-          model: Client,
-          attributes: ['name'],
+          model: Client
         }
       ]
     });
     return res.json({
-      message: 'success',
+      success: true,
+      message: "success",
+      code: 200,
       data: projects
     });
   } catch (error) {
@@ -54,8 +55,10 @@ export const createProject = async (req: Request, res: Response): Promise<any> =
     });
 
     return res.status(201).json({
+      success: true,
       message: "success",
-      data: newProject,
+      code: 201,
+      data: newProject
     });
   } catch (error) {
     console.error(error);

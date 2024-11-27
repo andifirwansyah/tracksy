@@ -5,7 +5,9 @@ export const getClient = async (req: Request, res: Response): Promise<any> => {
   try {
     const clients = await Client.findAll();
     return res.json({
-      message: 'success',
+      success: true,
+      message: "success",
+      code: 200,
       data: clients
     })
   } catch (error) {
@@ -24,8 +26,10 @@ export const createClient = async (req: Request, res: Response): Promise<any> =>
     const newClient = await Client.create({ name, email, phone, company, address });
 
     return res.status(201).json({
+      success: true,
       message: "success",
-      data: newClient,
+      code: 201,
+      data: newClient
     });
   } catch (error) {
     console.error(error);
